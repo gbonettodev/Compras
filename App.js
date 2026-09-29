@@ -23,14 +23,17 @@ export default function App() {
         }
 
         // Adiciona o novo produto e limpa o campo de texto
-        setListaProdutos([...listaProdutos, produto.trim()]);
+        setListaProdutos((produtosAtuais) => [
+            ...produtosAtuais,
+            produto.trim(),
+        ]);
         setProduto("");
     }
 
     // Função para remover um produto pelo seu índice
     function removerProduto(indexParaRemover) {
-        setListaProdutos(
-            listaProdutos.filter((_, index) => index !== indexParaRemover)
+        setListaProdutos((produtosAtuais) =>
+            produtosAtuais.filter((_, index) => index !== indexParaRemover)
         );
     }
 
@@ -47,8 +50,13 @@ export default function App() {
                     value={produto}
                     onChangeText={setProduto}
                 />
-                <Pressable style={styles.botaoAdicionar} onPress={adicionarProduto}>
-                    <Text style={styles.textoBotaoAdicionar}>+</Text>
+                <Pressable
+                    style={styles.botaoAdicionar}
+                    accessibilityRole="button"
+                    accessibilityLabel="Adicionar produto"
+                    onPress={adicionarProduto}
+                >
+                    <Text style={styles.textoBotaoAdicionar}>ADICIONAR</Text>
                 </Pressable>
             </View>
 
@@ -117,7 +125,7 @@ const styles = StyleSheet.create({
 
     botaoAdicionar: {
         backgroundColor: "#2e7d32",
-        width: 50,
+        width: 110,
         height: 50,
         borderRadius: 10,
         justifyContent: "center",
@@ -126,9 +134,8 @@ const styles = StyleSheet.create({
 
     textoBotaoAdicionar: {
         color: "#fff",
-        fontSize: 28,
+        fontSize: 14,
         fontWeight: "bold",
-        marginTop: -3, // Centralização ótica perfeita do caractere "+"
     },
 
     areaLista: {
